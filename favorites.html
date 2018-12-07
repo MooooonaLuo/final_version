@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="data.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style>
+
+    .nav{
+      width: 1010px;
+      height: 130px;
+      /*background: red;*/
+      margin:auto;
+      background: #484848;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: auto;
+    }
+    .nav div{
+      width: 150px;
+      height: 50px;
+      float: left;
+      /*margin-top: 20px;*/
+      /*background: rgb(200,200,200);*/
+    }
+    h1{
+      font-size: 50px;
+      font-family: arial;
+      color: #86b332;
+      font-weight: normal;
+      margin-top: 200px;
+
+    }
+    .content{
+      width: 1000px;
+      height: 1150px;
+    }
+    li{
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      background: #eee;
+      width: 960px;
+      list-style: none;
+      font-family: arial;
+      font-size: 40px;
+      background: #86b332;
+      height: 70px;
+      margin-bottom: 20px;
+    }
+    li p{
+      color: white;
+      line-height: 70px;
+      margin-left: 20px;
+    }
+    ul{
+      padding: 10px;
+      font-size: 50px;
+    }
+      .nav div p{
+        text-align: center;
+        font-size: 40px;
+      }
+      a{
+        text-decoration: none;
+        color: black;
+      }
+      p{
+        font-family: arial;
+      }
+       .close {
+      /*margin-left:480px;*/
+      float: right;
+      margin-right: 30px;
+      color: white;
+      line-height: 70px;
+      }
+      #warning{
+        color: black;
+        font-size: 35px;
+        text-align: center;
+      }
+
+      .favorite a{
+        color: white;
+        line-height: 70px;
+        padding-left: 30px;
+      }
+  </style>
+</head>
+<body>
+
+  <br>
+  <h1><center>Favorites<center></h1>
+  <br><br>
+  <div class="content">
+    <p id="warning"></p>
+    <ul id="recipeList">
+    </ul>
+    <script type="text/javascript">
+    // var check = localStorage.getItem("liked");
+    // if(!(check===null)){
+    //   addRecipe();
+      $(document).ready(function(){
+        var checkFavorite = JSON.parse(localStorage.getItem('favorite'));
+        console.log(checkFavorite);
+        if(checkFavorite == null || checkFavorite.length==0){
+          var warning = "You haven't added any recipes to your favorites!";
+          document.getElementById("warning").innerHTML = warning;
+        } else {
+          for(var i=0; i<checkFavorite.length; i++){
+            var li = document.createElement('li');
+            li.className = "favorite"
+            var t = checkFavorite[i];
+            var text = document.createTextNode(t);
+            li.id = "fav" + i;
+            var a = document.createElement('a');
+            a.href = "recipe.html";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.id = "close"+i;
+            span.appendChild(txt);
+
+            li.onclick = function(){
+            localStorage.recipeChosen = t;
+            }
+            li.appendChild(a).appendChild(text);
+            li.appendChild(span);
+            document.getElementById('recipeList').appendChild(li);
+          }
+        }
+
+        var close = document.getElementsByClassName("close");
+        var n;
+        for (n = 0; n < close.length; n++) {
+          close[n].onclick = function() {
+            if(close.length==1){
+               localStorage.recipeChosen = JSON.stringify(checkFavorite[1]);
+               var div = this.parentElement;
+               div.remove();
+               var e = [];
+               localStorage.favorite = JSON.stringify(e);
+            } else {
+                var num = this.id[5];
+                var num2 = num+1;
+                var div = this.parentElement;
+                div.remove();
+                checkFavorite.splice(num,num2);
+                localStorage.favorite = JSON.stringify(checkFavorite);
+              }
+          }
+        }
+        var list = document.getElementsByClassName("favorite");
+        for(var m=0; m<list.length; m++){
+          list[m].onclick = function(){
+            var number = this.id[3];
+            localStorage.recipeChosen = checkFavorite[number];
+          }
+        }
+
+      });
+
+    </script>
+  </div>
+  <div class="nav">
+    <div class="back">
+      <a href="home.html">
+        <p><img src="image/back.png" width="70px"></p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

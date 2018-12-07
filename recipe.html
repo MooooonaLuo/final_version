@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Generic Recipe Placeholder</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="data.js"></script>
+    <style>
+
+      h1{
+        margin-top: 190px;
+        font-family: arial;
+        font-size: 30px;
+        font-weight: normal;
+        text-align: center;
+        color: #86b332;
+      }
+      div.buttons{
+        text-align: center;
+      }
+
+      .nav{
+          height: 130px;
+          /*background: red;*/
+          margin:auto;
+          background: #484848;
+          position: fixed;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: auto;
+          }
+        .nav div{
+          width: 150px;
+          height: 50px;
+          float: left;
+        }
+        .next{
+          margin-left: 700px;
+        }
+        .nav div p{
+          text-align: center;
+          font-size: 40px;
+          font-family: arial;
+        }
+        .home{
+          margin-left: 280px;
+        }
+        a{
+          text-decoration: none;
+          color: black;
+        }
+        textarea{
+          font-size: 20px;
+        }
+        button{
+          font-size: 30px;
+          float: right;
+        }
+        .like{
+          margin-top: 20px;
+          margin-left: 20px;
+        }
+        #likeBt{
+          width: 100px;
+          height: 100px;
+          background: url('image/like.png');
+          background-repeat: no-repeat;
+          background-position: center center;
+          border: none;
+        }
+        .detail p{
+          font-size: 12px;
+          font-family: arial;
+          color: #696969;
+
+          
+        }
+        .detail{
+          margin-bottom: 30px;
+          margin-left: 20px;
+          margin-right: 40px;
+          width: 900px;
+        }
+        
+        li{
+          list-style: none;
+          font-family: arial;
+          font-size: 12px;
+        }
+        #nutrition{
+          font-family: arial;
+          font-size: 12px;
+          color: #696969;
+        }
+        #directions{
+          margin-left: 40px;
+        }
+        .image{
+          margin-top: 40px;
+        }
+        .ingre li {
+          color: #696969;
+        }
+        #step{
+          /*color: black;*/
+          font-weight: bold;
+        }
+
+        button[type="button"]{outline: none;}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    
+    <!-- Title of Recipe -->
+    <h1 id="title">Generic Recipe Placeholder</h1>
+  <!-- picture of recipe -->
+    <div class="image"><img id="image" src="" width=103%></div>
+    <!-- "like" button -->
+    <div class="like">
+        <button id="likeBt" type="button" ></button>
+    </div>
+    <!-- function of "like" button -->
+    <script type="text/javascript">
+
+
+    </script>
+    <div class="detail">
+      <p style="color: #86b332; font-size: 16px; margin-left:35px;"><br/>Ingredients:</p>
+      <!-- ingredient list -->
+      <ul class="ingre" id="ingredient">
+          <!-- 1 pound Beef <br/>
+          2 Tomatoes <br/>
+          1 Egg -->
+      
+      </ul>
+      <br>
+      <hr>
+      <p style="color: #86b332; font-size: 16px; margin-left:35px;"><br>Directions:</p><br>
+      <p id="directions">
+          <!-- Step 1: <br/>Chop the beef and put them in boiling water for 2 minutes <br/><br/>
+          Step 2: <br/>Put one spoon of soy sauce in a fry pan <br/><br/>
+          Step 3: <br/>Put beef into the fry pan and stir them for 5 minutes -->
+      </p>
+      <br>
+      <hr>
+      <p style="color: #86b332; font-size: 16px; margin-left:35px;"><br/>Nutrition:</p>
+      <ul id="nutrition"></ul>
+    </div>
+
+    <script type="text/javascript">
+      var title = localStorage.getItem('recipeChosen');
+      var titleSt = title.toString();
+
+      for (var a=0; a<data.length; a++){
+        if(data[a]["title"]===titleSt){
+          document.getElementById("title").innerHTML = data[a]["title"];
+          for (var b=0; b<data[a]["ingredient"].length; b++){
+            var t = data[a]["ingredient"][b];
+            if(!(t == "Stove") && !(t == "Oven") && !(t == "Blender") && !(t == "Rice Cooker") && !(t == "Steamer") && !(t == "Microwave") && !(t == "Pressure Cooker") && !(t == "Knife") && !(t == "Cutting Board") &&!(t == "Fry Pan") && !(t == "Pot") && !(t == "Scale") && !(t == "Measuring Cup") && !(t == "Mixer") && !(t == "Strainer") && !(t == "Measuring Spoons") ){
+            var m = document.createElement("li");
+            var text = document.createTextNode(t);
+            m.appendChild(text);
+            document.getElementById("ingredient").appendChild(m);
+            }
+          }
+          for (var b=0; b<data[a]["directions"].length; b++){
+            var m = document.createElement("li");
+            var t = data[a]["directions"][b];
+            var text = document.createTextNode(t);
+
+            var s = document.createElement("p");
+            var n = b + 1
+            var text2 = "Step " + n.toString();
+            var t2 = document.createTextNode(text2);
+            var br = document.createElement("br");
+            var br2 = document.createElement("br");
+
+            s.appendChild(t2);
+            s.id = "step";
+            m.appendChild(s)
+            m.appendChild(text);
+            m.appendChild(br);
+            m.appendChild(br2);
+            
+            document.getElementById("directions").appendChild(m);
+          }
+            var m = data[a]["nutrition"];
+            var n = document.createTextNode(m)
+            document.getElementById("nutrition").appendChild(n);
+          
+            var src = "image/"+data[a]["image"];
+            document.getElementById("image").src = src;
+        }
+      }
+
+
+
+      $(document).ready(function(){
+      var count = 0;
+      // var checkFavorite = JSON.parse(localStorage.getItem('favorite'));
+      // console.log(checkFavorite);
+      if(localStorage.getItem('favorite')==null){
+        count = 0;
+      } else {
+        var checkFavorite = JSON.parse(localStorage.getItem('favorite'));
+        for(var i=0; i<checkFavorite.length; i++){
+          if(checkFavorite[i]==title){
+            count = 1;
+          }
+        }
+      }
+  
+        if(count==1){
+                    $("#likeBt").css('background', "url('image/liked.png')");
+                    $("#likeBt").css('background-repeat','no-repeat');
+                    $("#likeBt").css('background-position','center center');
+                }else if(count==0){
+                    $("#likeBt").css('background', "url('image/like.png')");
+                    $("#likeBt").css('background-repeat','no-repeat');
+                    $("#likeBt").css('background-position','center center');
+                }
+
+        // $(document).ready(function(){
+          $("#likeBt").click(function(){
+              if(count==0){
+                  $(this).css('background', "url('image/liked.png')");
+                  $(this).css('background-repeat','no-repeat');
+                  $(this).css('background-position','center center');
+                  count=1;
+                  addFavorite();
+              }else if(count==1){
+                  $(this).css('background', "url('image/like.png')");
+                  $(this).css('background-repeat','no-repeat');
+                  $(this).css('background-position','center center');
+                  count=0;
+                  removeFavorite();
+              }
+          });
+        });
+
+      
+    </script>
+
+    <div class="nav">
+        <div class="back">
+          <a href="javascript:history.back()">
+            <p><img src="image/back.png" width="70px"></p>
+          </a>
+        </div> 
+        <div class="home">
+          <a href="home.html">
+            <p><img src="image/home.png" width="80px"></p>
+          </a>
+       </div>  
+    </div>
+  </body>
+</html>

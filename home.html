@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+  body{
+     background-image: url("image/background.jpg");
+     background-repeat: no-repeat;
+     background-size: 1000px;
+  }
+  h1{
+    margin-top: 40px;
+    font-family: arial;
+    font-size: 50px
+  }
+
+
+  div.account{
+    text-align: right;
+  }
+
+  div .buttons{
+    text-align: center;
+    background: #86b332;
+    width: 300px;
+    height: 80px;
+    margin-top: 50px;
+    margin-left: 340px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .title{
+    margin-top: 500px;
+    margin-bottom: 100px;
+  }
+  .main{
+    font-size: 40px;
+    color: white;
+    margin-top: 15px;
+  }
+ 
+  </style>
+  <title>Recipedia</title>
+  <meta charset="utf-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+</head>
+
+<body>
+  <div>
+
+    <div class="title">
+      <img src="image/logo.png" width=60% style="margin-left: 200px;">
+    </div>
+
+    <div class="buttons" id="ingredient">
+      <a href="ingredient.html"><button class="main" type="button">Find Recipe</button></a>
+    </div>
+    <br/>
+    <div class="buttons" id="favorites">
+    <a href="favorites.html"><button class="main" type="button">Favorite</button></a>
+    </div>
+     <br/>
+    <div class="buttons">
+    <a href="login.html"><button class="main" type="button" onclick="removeIng()">Log Out</button></a>
+    </div>
+    <script type="text/javascript">
+      function removeIng(){
+        localStorage.removeItem("inDatabase");
+      }
+    </script>
+  </div>
+</body>
+</html>
